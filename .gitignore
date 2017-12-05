@@ -1,0 +1,3 @@
+.modgit
+var/cache/*
+var/session/*
