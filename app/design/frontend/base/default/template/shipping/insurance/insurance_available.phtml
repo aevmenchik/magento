@@ -1,0 +1,15 @@
+
+<?php /** @var $this Shipping_Insurance_Block_Onepage_Insurance */ ?>
+<?php $_insuranceRate = $this->getAvailableShippingInsuranceRate(); ?>
+<?php if (!$_insuranceRate): ?>
+    <p><?php echo $this->__('No insurance are available for this shipping method.') ?></p>
+    <script type="text/javascript">shippingInsurance.save();</script>
+<?php else: ?>
+    <dt class="sp-methods">
+        <dt></dt>
+        <dd>
+            <input name="shipping_insurance" type="checkbox" value="<?php echo $_insuranceRate['value'] ?>" <?php if($this->isShippingInsuranceActive()) echo ' checked="checked"' ?> class="checkbow"/>
+            <span>Insurance Fee <?php echo $_insuranceRate['format_value']; ?></span>
+        </dd>
+    </dl>
+<?php endif; ?>

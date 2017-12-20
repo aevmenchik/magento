@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+
+    <checkout_onepage_progress>
+        <block type="insurance/onepage_progress" name="root" output="toHtml" template="shipping/insurance/progress.phtml">
+            <block type="checkout/onepage_payment_info" name="payment_info">
+                <action method="setInfoTemplate"><method></method><template></template></action>
+            </block>
+        </block>
+    </checkout_onepage_progress>
+
+    <shipping_insurance>
+        <remove name="right"/>
+        <remove name="left"/>
+
+        <block type="insurance/onepage_insurance"  name="root" output="toHtml" template="shipping/insurance/insurance_available.phtml">
+        </block>
+    </shipping_insurance>
+
+    <checkout_onepage_index>
+        <reference name="checkout.onepage">
+            <block type="insurance/onepage_insurance" name="insurance.onepage.shipping_insurance" after="checkout.onepage.shipping_method" as="shipping_insurance" template="shipping/insurance/insurance.phtml">
+                <block type="insurance/onepage_insurance" name="insurance.onepage.shipping_insurance.available" as="insurance_available" template="shipping/insurance/insurance_available.phtml"/>
+            </block>
+        </reference>
+    </checkout_onepage_index>
+
+</layout>

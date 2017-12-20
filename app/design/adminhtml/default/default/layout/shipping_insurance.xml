@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+
+    <adminhtml_sales_order_create_index>
+        <reference name="shipping_method">
+            <block type="insurance/adminhtml_order_create_insurance_form" after="form" template="shipping/insurance/order/create/form.phtml" name="insurance_form" />
+        </reference>
+    </adminhtml_sales_order_create_index>
+
+    <adminhtml_sales_order_create_load_block_data>
+        <reference name="shipping_method">
+            <block type="insurance/adminhtml_order_create_insurance_form" after="form" template="shipping/insurance/order/create/form.phtml" name="insurance_form" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_data>
+
+    <adminhtml_sales_order_create_load_block_shipping_method>
+        <reference name="shipping_method">
+            <block type="insurance/adminhtml_order_create_insurance_form" after="form" template="shipping/insurance/order/create/form.phtml" name="insurance_form" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_shipping_method>
+</layout>

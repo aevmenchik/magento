@@ -1,0 +1,54 @@
+<?php /** @var $this Shipping_Insurance_Block_Adminhtml_Order_Create_Insurance_Form */ ?>
+
+<br />
+<hr>
+<br />
+<strong><?php echo Mage::helper('sales')->__('Shipping Insurance') ?></strong>
+
+<?php $_insurance_rate = $this->getShippingInsuranceRate(); ?>
+<?php if (!empty($_insurance_rate)): ?>
+    <div id="order-shipping-insurance-choose" style="display:none">
+        <dl class="shipment-methods">
+            <dd>
+                <ul>
+                    <li>
+                        <input type="checkbox" name="order[shipping_insurance]" value="<?php echo $_insurance_rate['value'] ?>"
+                               id="s_method_insurance" <?php echo !empty($_insurance_rate['checked']) ? 'checked="true"' : '' ?>
+                               onclick="order.setShippingInsurance(this.checked == true ? this.value : 0)" />
+                        <label class="normal" for="s_method_insurance">
+                            <?php echo Mage::helper('sales')->__('Insurance Fee') ?> <strong><?php echo $_insurance_rate['format_value'] ?>
+                            </strong>
+                        </label>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+        <div id="order-shipping-insurance-info">
+            <?php echo Mage::helper('sales')->__('Insurance Fee') ?> -
+            <strong>
+                <?php echo $_insurance_rate['active_value']; ?>
+            </strong>
+            <br/>
+            <a href="#" onclick="$('order-shipping-insurance-info').hide();$('order-shipping-insurance-choose').show();return false">
+                <?php echo Mage::helper('sales')->__('Click to edit shipping insurance') ?>
+            </a>
+        </div>
+<?php else: ?>
+    <div id="order-shipping-method-summary">
+        <?php echo Mage::helper('sales')->__('No insurance are available for this shipping method.') ?>
+    </div>
+<?php endif; ?>
+<div style="display:none;" id="shipping-insurance-overlay" class="overlay"><span><?php echo $this->__('Shipping insurance selection is not applicable') ?></span></div>
+<script type="text/javascript">
+
+    AdminOrder.prototype.setShippingInsurance = function(method){
+        var data = {};
+        data['order[shipping_insurance]'] = method;
+        this.loadArea(['shipping_method', 'totals'], true, data);
+    };
+
+
+    order.overlay('shipping-insurance-overlay', <?php if ($this->getQuote()->isVirtual()): ?>false<?php else: ?>true<?php endif; ?>);
+    order.overlay('address-shipping-overlay', <?php if ($this->getQuote()->isVirtual()): ?>false<?php else: ?>true<?php endif; ?>);
+</script>

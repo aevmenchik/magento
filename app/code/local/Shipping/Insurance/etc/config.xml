@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Shipping_Insurance>
+            <version>0.0.1</version>
+        </Shipping_Insurance>
+    </modules>
+    <global>
+        <models>
+            <shipping_insurance>
+                <class>Shipping_Insurance_Model</class>
+            </shipping_insurance>
+
+            <checkout>
+                <rewrite>
+                    <type_onepage>Shipping_Insurance_Model_Type_Onepage</type_onepage>
+                </rewrite>
+            </checkout>
+
+            <sales>
+                <rewrite>
+                    <quote>Shipping_Insurance_Model_Quote</quote>
+                </rewrite>
+            </sales>
+
+            <adminhtml>
+                <rewrite>
+                    <sales_order_create>Shipping_Insurance_Model_Adminhtml_Sales_Order_Create</sales_order_create>
+                </rewrite>
+            </adminhtml>
+        </models>
+
+        <blocks>
+            <checkout>
+                <rewrite>
+                    <onepage>Shipping_Insurance_Block_Onepage</onepage>
+                </rewrite>
+            </checkout>
+
+            <insurance>
+                <class>Shipping_Insurance_Block</class>
+            </insurance>
+
+            <shipping_insurance_onepage>
+                <class>Shipping_Insurance_Block_Onepage</class>
+            </shipping_insurance_onepage>
+
+            <sales>
+                <rewrite>
+                    <order_totals>Shipping_Insurance_Block_Order_Totals</order_totals>
+                </rewrite>
+            </sales>
+
+            <tax>
+                <rewrite>
+                    <checkout_insurance>Shipping_Insurance_Block_Checkout_Insurance</checkout_insurance>
+                </rewrite>
+            </tax>
+
+            <adminhtml>
+                <rewrite>
+                    <sales_order_totals>Shipping_Insurance_Block_Adminhtml_Order_Totals</sales_order_totals>
+                    <sales_order_invoice_totals>Shipping_Insurance_Block_Adminhtml_Sales_Invoice_Totals</sales_order_invoice_totals>
+                    <sales_order_creditmemo_totals>Shipping_Insurance_Block_Adminhtml_Sales_Creditmemo_Totals</sales_order_creditmemo_totals>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+
+        <rewrite>
+            <shipping_insurance_onepage>
+                <from><![CDATA[#^/checkout/onepage/saveShippingMethod#]]></from>
+                <to>/insurance/onepage/saveShippingMethod</to>
+            </shipping_insurance_onepage>
+        </rewrite>
+
+        <resources>
+            <shipping_insurance_setup>
+                <setup>
+                    <module>Shipping_Insurance</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </shipping_insurance_setup>
+        </resources>
+
+        <sales>
+            <quote>
+                <totals>
+                    <shipping_insurance>
+                        <class>shipping_insurance/quote_address_total_insurance</class>
+                    </shipping_insurance>
+                </totals>
+            </quote>
+            <order_invoice>
+                <totals>
+                    <shipping_insurance>
+                        <class>shipping_insurance/order_invoice_total_insurance</class>
+                        <after>shipping</after>
+                    </shipping_insurance>
+                </totals>
+            </order_invoice>
+            <order_creditmemo>
+                <totals>
+                    <shipping_insurance>
+                        <class>shipping_insurance/order_creditmemo_total_insurance</class>
+                        <after>shipping</after>
+                    </shipping_insurance>
+                </totals>
+            </order_creditmemo>
+        </sales>
+
+        <fieldsets>
+            <sales_convert_quote_address>
+                <shipping_insurance>
+                    <to_order>*</to_order>
+                    <to_order_address>*</to_order_address>
+                </shipping_insurance>
+                <shipping_insurance_amount>
+                    <to_order>*</to_order>
+                </shipping_insurance_amount>
+                <base_shipping_insurance_amount>
+                    <to_order>*</to_order>
+                </base_shipping_insurance_amount>
+            </sales_convert_quote_address>
+            <sales_convert_order>
+                <shipping_insurance>
+                    <to_order>*</to_order>
+                </shipping_insurance>
+                <shipping_insurance_amount>
+                    <to_order>*</to_order>
+                </shipping_insurance_amount>
+                <base_shipping_insurance_amount>
+                    <to_order>*</to_order>
+                </base_shipping_insurance_amount>
+            </sales_convert_order>
+            <sales_convert_quote_address>
+                <shipping_insurance>
+                    <to_order>*</to_order>
+                </shipping_insurance>
+                <shipping_insurance_amount>
+                    <to_order>*</to_order>
+                </shipping_insurance_amount>
+                <base_shipping_insurance_amount>
+                    <to_order>*</to_order>
+                </base_shipping_insurance_amount>
+            </sales_convert_quote_address>
+            <sales_copy_order_shipping_address>
+                <shipping_insurance>
+                    <to_order>*</to_order>
+                </shipping_insurance>
+            </sales_copy_order_shipping_address>
+        </fieldsets>
+
+    </global>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <shipping_insurance>
+                    <file>shipping_insurance.xml</file>
+                </shipping_insurance>
+            </updates>
+        </layout>
+    </adminhtml>
+    <frontend>
+        <routers>
+            <shipping_insurance>
+                <use>standard</use>
+                <args>
+                    <module>Shipping_Insurance</module>
+                    <frontName>insurance</frontName>
+                </args>
+            </shipping_insurance>
+
+        </routers>
+
+        <events>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <hooksystem_order_success>
+                        <type>singleton</type>
+                        <class>shipping_insurance/observer</class>
+                        <method>hookToOrderSaveEvent</method>
+                    </hooksystem_order_success>
+                </observers>
+            </checkout_onepage_controller_success_action>
+        </events>
+
+        <layout>
+            <updates>
+                <shipping_insurance>
+                    <file>shipping_insurance.xml</file>
+                </shipping_insurance>
+            </updates>
+        </layout>
+    </frontend>
+
+    <default>
+        <sales>
+            <totals_sort>
+                <shipping_insurance>35</shipping_insurance>
+            </totals_sort>
+        </sales>
+    </default>
+
+</config>
